@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { addToCart } from '../actions/cartActions';
 
 function CartScreen(props){
@@ -7,9 +8,11 @@ function CartScreen(props){
     const cart = useSelector(state => state.cart);
 
     const { cartItems } = cart;
+    console.log(cart);
     
     const productId = props.match.params.id;
     const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1 ;
+    
     const dispatch = useDispatch();
 
 useEffect(() => {
@@ -36,16 +39,43 @@ useEffect(() => {
                     </div>
                     : 
                     cartItems.map( item => 
-                        <div>
+                      <li> 
+                        <div className="cart-image">
                             <img src={item.image} alt="products" />
-
+                        </div>    
+                        <div className="cart-name">
+                            <div>
+                                <Link to={"/product/" + item.product }>
+                                        {item.name}     
+                                </Link>
+                            </div>
+                             <div>
+                                    Qty:
+                                        <select> 
+                                           <option value="1">1</option> 
+                                           <option value="2">2</option> 
+                                           <option value="3">3</option> 
+                                        </select>
+                             </div>
                         </div>
-                    )
-                    
+                        <div className="cart-price">
+                          PKR {item.price}
+                        </div>
+                        
+                      </ li> 
+                    )                    
                 }
             </ul>
         </div>
         <div className="cart-action">
+            <h3>
+                Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items)
+                : 
+                $ {cartItems.reduce((a, c) => a + c.qty * c.price, 0 )}
+            </h3>
+            <button className="button primary" disabled={cartItems.length === 0}>
+                Proceed to checkout
+            </button>
 
         </div>
     </div>
