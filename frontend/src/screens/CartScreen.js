@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 
 function CartScreen(props){
 
@@ -14,6 +14,10 @@ function CartScreen(props){
     const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1 ;
     
     const dispatch = useDispatch();
+
+    const removeFromCartHandler = (productId) => {
+        dispatch(removeFromCart(productId));
+    }
 
 useEffect(() => {
     if(productId){
@@ -50,12 +54,15 @@ useEffect(() => {
                                 </Link>
                             </div>
                              <div>
-                                    Qty:
-                                        <select> 
-                                           <option value="1">1</option> 
-                                           <option value="2">2</option> 
-                                           <option value="3">3</option> 
-                                        </select>
+                                  Qty:
+                                  <select> 
+                                    <option value="1">1</option> 
+                                    <option value="2">2</option> 
+                                    <option value="3">3</option> 
+                                  </select>
+                                  <button className="button" type="button" onClick={() => removeFromCartHandler(item.product)}>
+                                      Delete
+                                  </button>
                              </div>
                         </div>
                         <div className="cart-price">
