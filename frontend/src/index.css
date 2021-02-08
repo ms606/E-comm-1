@@ -237,7 +237,7 @@ a > .rating > span:last-child {
 .cart {
   display: flex;
   flex-wrap: wrap;
-  background-color: khaki;
+  background-color: rgb(255, 255, 255);
   align-items: flex-start;
 }
 
@@ -248,7 +248,7 @@ a > .rating > span:last-child {
 .cart-action {
   flex: 1 1 20rem;
   background-color: #c1dbc5;
-  border: .1rem #ffb901 solid;
+  border: .1rem #b89f61 solid;
   border-radius: .5rem;
   padding: 1rem;
 }
