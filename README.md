@@ -25,3 +25,8 @@ npm install js-cookie
 
 ** ROOT FOLDER  
 npm install dotenv // this is to access env folder
+-
+
+** root folder 
+npm install mongoose
+-
