@@ -9,7 +9,9 @@ dotenv.config();
 
 const mongodbUrl = config.MONGODB_URL;
 mongoose.connect(mongodbUrl, {
-	useNewUrlParser: true
+	useNewUrlParser: true,
+	useUnifiedTopology: true, 
+	useCreateIndex: true
 }).catch(error => console.log(error.reason));
 
 const app = express();
