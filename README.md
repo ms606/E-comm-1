@@ -30,3 +30,7 @@ npm install dotenv // this is to access env folder
 ** root folder 
 npm install mongoose
 -
+
+** root folder 
+npm install jsonwebtoken
+- 
