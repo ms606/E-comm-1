@@ -33,4 +33,7 @@ npm install mongoose
 
 ** root folder 
 npm install jsonwebtoken
-- 
+
+** root folder 
+npm install body-parser
+-
