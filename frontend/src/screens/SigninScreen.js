@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { signin } from '../actions/userActions';
 
 
 function SigninScreen(props){
 
     const [email, setEmail]  = useState('');
     const [password, setPassowrd]  = useState('');
-
+    const userSignin = useSelector(state => state.userSignin);
+    const { loading, userInfo, error } = userSignin;
     const dispatch = useDispatch();
     
     const submitHandler = (e) => {
@@ -17,10 +19,13 @@ function SigninScreen(props){
 
     
     useEffect(() => {
+        if (userInfo){
+            props.history.push("/");
+        }
         return () => {
             //
         };
-    }, []);
+    }, [userInfo]);
 
     return  <div className="form" >
         <form onSubmit={submitHandler}>
@@ -28,14 +33,17 @@ function SigninScreen(props){
             <li>
                 <h2>Sign-In</h2>
             </li>
-
             <li>
-                 <label for="email">Email</label>
+                {loading && <div>Loading...</div>}
+                {error && <div>{error}</div>}
+            </li>
+            <li>
+                 <label htmlFor="email">Email</label>
                  <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}>    
                  </input>
             </li>
             <li>
-                 <label for="password">Password</label>
+                 <label htmlFor="password">Password</label>
                  <input type="password" id="password" name="password" onChange={(e) => setPassowrd(e.target.value)}>                     
                  </input>
             </li>
