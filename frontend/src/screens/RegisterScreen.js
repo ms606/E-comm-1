@@ -16,7 +16,7 @@ function RegisterScreen(props){
     
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(register(email, password));
+        dispatch(register(name, email, password));
     }
 
     
@@ -33,7 +33,7 @@ function RegisterScreen(props){
         <form onSubmit={submitHandler}>
          <ul className="form-container">
             <li>
-                <h2>Sign-In</h2>
+                <h2>Create Account</h2>
             </li>
             <li>
                 {loading && <div>Loading...</div>}
@@ -41,7 +41,7 @@ function RegisterScreen(props){
             </li>
             <li>
                  <label htmlFor="name">Name</label>
-                 <input type="name" name="name" id="name" onChange={(e) => setEmail(e.target.value)}>    
+                 <input type="name" name="name" id="name" onChange={(e) => setName(e.target.value)}>    
                  </input>
             </li>
             <li>
@@ -55,13 +55,18 @@ function RegisterScreen(props){
                  </input>
             </li>
             <li>
+                 <label htmlFor="rePassword">Re-Enter Password</label>
+                 <input type="rePassword" id="rePassword" name="rePassword" onChange={(e) => setRePassowrd(e.target.value)}>                     
+                 </input>
+            </li>
+            <li>
                  <button type="submit" className="button primary">Register</button>
             </li>
 
-            <li> New To Just Organic</li>
-            <li>
-                <Link to="/register" className="button secondary text-center">Create your Just Organic Account</Link>
+            <li> Already have an account? 
+                <Link to="/signin">Sign-In</Link> 
             </li>
+           
          </ul>
         </form>
     </div>

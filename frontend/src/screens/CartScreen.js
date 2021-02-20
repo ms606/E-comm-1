@@ -19,11 +19,11 @@ function CartScreen(props){
     }
 
 
-useEffect(() => {
-    if(productId){
-        dispatch(addToCart(productId, qty));
-    }
-}, []);
+    useEffect(() => {
+        if(productId){
+            dispatch(addToCart(productId, qty));
+        }
+    }, []);
 
     const checkoutHandler = () => {
         props.history.push("/signin?redirect=shipping");
