@@ -4,28 +4,34 @@ import { saveProduct } from '../actions/productActions';
 
 
 function ProductsScreen(props){
-
-    const [name, setName]  = useState('');
-    const [price, setPrice]  = useState('');
-    const [image, setImage]  = useState('');
-    const [brand, setBrand]  = useState('');
+    const [name,     setName]      = useState('');
+    const [price,    setPrice]     = useState('');
+    const [image,    setImage]     = useState('');
+    const [brand,    setBrand]     = useState('');
     const [category, setCategory]  = useState('');
     const [countInStock, setCountInStock]  = useState('');
-    const [description, setDescription]  = useState('');
-    const productSave = useSelector(state => state.productSave);
+    const [description,  setDescription ]  = useState('');
+
+    const productSave = useSelector ( state => state.productSave );
     const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
     const dispatch = useDispatch();
     
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveProduct(name, price, image, brand, category, countInStock, 
+        dispatch(
+            saveProduct(
+            name,   
+            price,  
+            image,  
+            brand, 
+            category, 
+            countInStock, 
             description)
-            );
+        );
     }
 
     
-    useEffect(() => {
-       
+    useEffect(() => {      
         return () => {
             //
         };
