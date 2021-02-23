@@ -14,8 +14,6 @@
  }
 
 const isAuth = (req, res, next) => {
-    console.log('sass');
-    
     const token = req.headers.authorization; 
     
    if (token) {
