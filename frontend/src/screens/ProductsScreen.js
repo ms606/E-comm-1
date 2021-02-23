@@ -17,16 +17,18 @@ function ProductsScreen(props){
     const dispatch = useDispatch();
     
     const submitHandler = (e) => {
+      
         e.preventDefault();
         dispatch(
-            saveProduct(
+            saveProduct({
             name,   
             price,  
             image,  
             brand, 
             category, 
             countInStock, 
-            description)
+            description
+            })
         );
     }
 
