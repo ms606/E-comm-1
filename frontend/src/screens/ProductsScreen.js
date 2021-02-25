@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveProduct } from '../actions/productActions';
+import { saveProduct, listProducts } from '../actions/productActions';
 
 
 function ProductsScreen(props){
+    const [modalVisible, setModalVisible] = useState(false);
+    const [id,       setId]        = useState('');
     const [name,     setName]      = useState('');
     const [price,    setPrice]     = useState('');
     const [image,    setImage]     = useState('');
@@ -11,7 +13,8 @@ function ProductsScreen(props){
     const [category, setCategory]  = useState('');
     const [countInStock, setCountInStock]  = useState('');
     const [description,  setDescription ]  = useState('');
-
+    const productList = useSelector(state => state.productList);
+    const {loading, products, error} = productList;
     const productSave = useSelector ( state => state.productSave );
     const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
     const dispatch = useDispatch();
@@ -31,15 +34,67 @@ function ProductsScreen(props){
             })
         );
     }
-
     
     useEffect(() => {      
+        dispatch(listProducts());
         return () => {
             //
         };
     }, []);
+    
+    const openModal = (product) => {
+        setId(product._id);
+        setName(product.name);
+        setImage(product.image);
+        setPrice(product.price);
+        setDescription(product.description);
+        setBrand(product.brand);
+        setCategory(product.category);
+        setCountInStock(product.countInStock);    
+    }
 
-    return  <div className="form" >
+
+    return  <div className="content content-margined">
+
+        <div className="product-header">
+            <h3>Products</h3>
+            <button onClick={() => openModal({})}>Create Product</button>
+        </div>
+        <div className="product-list">
+
+          <table>
+            <thread>
+              <tr>
+                <th>ID</th>  
+                <th>Name</th>  
+                <th>Price</th>  
+                <th>Category</th>  
+                <th>Brand</th>  
+                <th>Action</th>  
+              </tr>             
+            </thread>
+            <tbody>
+              {products.map(product => (
+              <tr>
+                <td>{product._id}</td>  
+                <td>{product.name}</td>  
+                <td>{product.price}</td>  
+                <td>{product.category}</td>  
+                <td>{product.brand}</td> 
+                <td>
+                    <button onClick={() => openModal(product)}>Edit</button>
+                    <button>Delete</button>
+                </td>  
+              </tr>              
+                ))}  
+               
+            </tbody>
+          </table>
+
+        </div>
+    
+
+    <div className="form" >
         <form onSubmit={submitHandler}>
          <ul className="form-container">
             <li>
@@ -91,6 +146,8 @@ function ProductsScreen(props){
          </ul>
         </form>
     </div>
+</div>
 }
+
 
 export default ProductsScreen;
