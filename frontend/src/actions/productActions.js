@@ -27,29 +27,37 @@ const listProducts = () => async (dispatch) => {
 }
 
 const saveProduct = (product) => async (dispatch, getState) => {
-  console.log(product);
   try {
     dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
-    const {userSignin: {userInfo}} = getState();
-   
+    const {
+      userSignin: {userInfo},
+    } = getState();
+    
+    if (!product._id){
 
-    const { data } = await Axios.post('/api/products', product, {
+      const { data } = await Axios.post('/api/products', product, {
       headers: {
         'Authorization': 'Bearer' + userInfo.token
       }
-    });
-    
-   
-
+    });  
     dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
 
-
+    } else {
+      const { data } = await Axios.put(
+        '/api/products/' + product._id, 
+        product, 
+        {
+          headers: {
+           'Authorization': 'Bearer' + userInfo.token
+           }
+         }
+      ); 
+    dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+    }
   } catch (error) {
-
     dispatch ({ type: PRODUCT_SAVE_FAIL, payload: error.message});
   }
-
-}
+};
 
 
 
