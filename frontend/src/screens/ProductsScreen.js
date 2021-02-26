@@ -20,11 +20,14 @@ function ProductsScreen(props){
     const dispatch = useDispatch();
 
     useEffect(() => {      
+      if (successSave){
+        setModalVisible(false);
+      }  
         dispatch(listProducts());
         return () => {
             //
         };
-    }, []);
+    }, [successSave]);
 
     const openModal = (product) => {
         setModalVisible(true);
@@ -43,6 +46,7 @@ function ProductsScreen(props){
         e.preventDefault();
         dispatch(
             saveProduct({
+            _id: id,    
             name,   
             price,  
             image,  
@@ -79,42 +83,42 @@ function ProductsScreen(props){
                 </li>
                 <li>
                     <label htmlFor="name">Name</label>
-                    <input type="text" name="name" id="name" onChange={(e) => setName(e.target.value)}>    
+                    <input type="text" name="name" value={name} id="name" onChange={(e) => setName(e.target.value)}>    
                     </input>
                 </li>
                 <li>
                     <label htmlFor="price">Price</label>
-                    <input type="text" name="price" id="price" onChange={(e) => setPrice(e.target.value)}>    
+                    <input type="text" name="price" value={price} id="price" onChange={(e) => setPrice(e.target.value)}>    
                     </input>
                 </li>
                 <li>
                     <label htmlFor="image">Image</label>
-                    <input type="text" name="image" id="image" onChange={(e) => setImage(e.target.value)}>    
+                    <input type="text" name="image" value={image} id="image" onChange={(e) => setImage(e.target.value)}>    
                     </input>
                 </li>
                 <li>
                     <label htmlFor="brand">Brand</label>
-                    <input type="text" name="brand" id="brand" onChange={(e) => setBrand(e.target.value)}>    
+                    <input type="text" name="brand" value={brand} id="brand" onChange={(e) => setBrand(e.target.value)}>    
                     </input>
                 </li>
                 <li>
                     <label htmlFor="countInStock">Count in Stock</label>
-                    <input type="text" name="countInStock" id="countInStock" onChange={(e) => setCountInStock(e.target.value)}>    
+                    <input type="text" name="countInStock" value={countInStock} id="countInStock" onChange={(e) => setCountInStock(e.target.value)}>    
                     </input>
                 </li>
                 <li>
                     <label htmlFor="category">Category</label>
-                    <input type="text" name="category" id="category" onChange={(e) => setCategory(e.target.value)}>    
+                    <input type="text" name="category" value={category} id="category" onChange={(e) => setCategory(e.target.value)}>    
                     </input>
                 </li>
                 <li>
                     <label htmlFor="description">Description</label>
-                    <textarea type="text" name="description" id="description" onChange={(e) => setDescription(e.target.value)}>    
+                    <textarea type="text" name="description" value={description} id="description" onChange={(e) => setDescription(e.target.value)}>    
                     </textarea>
                 </li>
                 
                 <li>
-                    <button type="submit" className="button primary">Create</button>
+                    <button type="submit" className="button primary">{id ? "Update" : "Create"}</button>
                 </li>
 
                 <li>
@@ -129,38 +133,38 @@ function ProductsScreen(props){
         <div className="product-list">
 
           <table>
-            <thread>
-              <tr>
-                <th>ID</th>  
-                <th>Name</th>  
-                <th>Price</th>  
-                <th>Category</th>  
-                <th>Brand</th>  
-                <th>Action</th>  
-              </tr>             
-            </thread>
-            <tbody>
-              {products.map((product) => (
-              <tr>
-                <td>{product._id}</td>  
-                <td>{product.name}</td>  
-                <td>{product.price}</td>  
-                <td>{product.category}</td>  
-                <td>{product.brand}</td> 
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th>Brand</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product._id}>
+                <td>{product._id}</td>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>{product.category}</td>
+                <td>{product.brand}</td>
                 <td>
-                    <button onClick={() => openModal(product)}>Edit</button>
-                    <button>Delete</button>
-                </td>  
-              </tr>              
-                ))}  
-               
-            </tbody>
+                  <button className="button" onClick={() => openModal(product)}>
+                    Edit
+                  </button>{' '}
+                  <button
+                    className="button"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
           </table>
-
-  
-    
-
-    
     </div>
 </div>
 }
