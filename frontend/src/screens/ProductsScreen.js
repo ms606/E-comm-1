@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveProduct, listProducts } from '../actions/productActions';
+import { saveProduct, listProducts, deleteProduct } from '../actions/productActions';
 
 
 function ProductsScreen(props){
@@ -13,10 +13,16 @@ function ProductsScreen(props){
     const [category, setCategory]  = useState('');
     const [countInStock, setCountInStock]  = useState('');
     const [description,  setDescription ]  = useState('');
+
     const productList = useSelector(state => state.productList);
     const {loading, products, error} = productList;
-    const productSave = useSelector ( state => state.productSave );
+
+    const productSave = useSelector ( (state) => state.productSave );
     const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
+
+    const productDelete = useSelector ((state) => state.productDelete );
+    const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
+    
     const dispatch = useDispatch();
 
     useEffect(() => {      
@@ -27,7 +33,7 @@ function ProductsScreen(props){
         return () => {
             //
         };
-    }, [successSave]);
+    }, [successSave, successDelete]);
 
     const openModal = (product) => {
         setModalVisible(true);
@@ -41,28 +47,22 @@ function ProductsScreen(props){
         setCountInStock(product.countInStock);    
     }
 
-
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(
             saveProduct({
             _id: id,    
-            name,   
-            price,  
-            image,  
-            brand, 
-            category, 
-            countInStock,  
-            description
-            })
-        );
+            name, price, image, brand, category, countInStock, description
+          }));
+        };
+
+    const deleteHandler = (product) => {
+        dispatch(deleteProduct(product._id));
     };
 
-    
-    
+    console.log(productList,'asdfdsfa');
 
     return  <div className="content content-margined">
-
       <div className="product-header">
         <h3>Products</h3>
         <button className="button primary" onClick={() => openModal({})}>
@@ -144,7 +144,8 @@ function ProductsScreen(props){
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+
+            { products.map((product) => (
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
@@ -154,15 +155,13 @@ function ProductsScreen(props){
                 <td>
                   <button className="button" onClick={() => openModal(product)}>
                     Edit
-                  </button>{' '}
-                  <button
-                    className="button"
-                  >
+                  </button>
+                  <button className="button" onClick={() => deleteHandler(product)}>
                     Delete
                   </button>
                 </td>
               </tr>
-            ))}
+            ))} 
           </tbody>
           </table>
     </div>

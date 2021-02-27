@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 
 function HomeScreen(props) {
- 
   const productList = useSelector((state) => state.productList);
   const { products, loading, error } = productList;
   const dispatch = useDispatch();
@@ -20,7 +19,6 @@ function HomeScreen(props) {
   
   return (
     <>
-    
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
@@ -42,8 +40,7 @@ function HomeScreen(props) {
                 </div>
                 <div className="product-brand">{product.brand}</div>
                 <div className="product-price">${product.price}</div>
-                <div className="product-rating">
-                  
+                <div className="product-rating">          
                 </div>
               </div>
             </li>
