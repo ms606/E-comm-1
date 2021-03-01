@@ -2,7 +2,8 @@
  import config from './config';
 
  const getToken = (user) => {
-     return jwt.sign({
+     return jwt.sign(
+        {
             _id: user._id,
             name: user.name,
             email: user.email,
@@ -27,9 +28,8 @@ const isAuth = (req, res, next) => {
         return;
       });
     } else {
-        console.log(req.headers.authorization, 'asdsasdsd');
-        console.log('sass');
-
+       
+     console.log('sass');
      return res.status(401).send({ message: "Token is not supplied." });
     }
    };
