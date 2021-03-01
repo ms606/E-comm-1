@@ -60,8 +60,6 @@ function ProductsScreen(props){
         dispatch(deleteProduct(product._id));
     };
 
-    console.log(productList,'asdfdsfa');
-
     return  <div className="content content-margined">
       <div className="product-header">
         <h3>Products</h3>
@@ -131,8 +129,7 @@ function ProductsScreen(props){
         )}
 
         <div className="product-list">
-
-          <table>
+          <table className="table">
           <thead>
             <tr>
               <th>ID</th>
@@ -170,3 +167,6 @@ function ProductsScreen(props){
 
 
 export default ProductsScreen;
+
+
+
