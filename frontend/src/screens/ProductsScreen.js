@@ -152,7 +152,7 @@ function ProductsScreen(props){
                 <td>
                   <button className="button" onClick={() => openModal(product)}>
                     Edit
-                  </button>
+                  </button> {'  '}
                   <button className="button" onClick={() => deleteHandler(product)}>
                     Delete
                   </button>

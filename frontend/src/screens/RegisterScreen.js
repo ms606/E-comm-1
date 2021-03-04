@@ -19,10 +19,11 @@ function RegisterScreen(props){
         dispatch(register(name, email, password));
     }
 
-    
+    const redirect = props.location.search? props.location.search.split("=")[1]:'/';
+
     useEffect(() => {
         if (userInfo){
-            props.history.push("/");
+            props.history.push(redirect);
         }
         return () => {
             //
@@ -56,7 +57,7 @@ function RegisterScreen(props){
             </li>
             <li>
                  <label htmlFor="rePassword">Re-Enter Password</label>
-                 <input type="rePassword" id="rePassword" name="rePassword" onChange={(e) => setRePassowrd(e.target.value)}>                     
+                 <input type="password" id="rePassword" name="rePassword" onChange={(e) => setRePassowrd(e.target.value)}>                     
                  </input>
             </li>
             <li>
@@ -64,7 +65,7 @@ function RegisterScreen(props){
             </li>
 
             <li> Already have an account? 
-                <Link to="/signin">Sign-In</Link> 
+            <Link to={redirect === "/" ? "signin" : "signin?redirect=" + redirect} >Sign in</Link>
             </li>
            
          </ul>
