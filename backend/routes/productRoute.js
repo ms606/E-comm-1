@@ -11,9 +11,6 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
 	const products = await Product.findOne({_id: req.params.id});
-	console.log(products);
-	
-
 	if(products){
 		res.send(products);
 	} else {
@@ -23,10 +20,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", isAuth, isAdmin, async (req, res) => {
 
-	console.log(isAuth, isAdmin);
-	console.log('asdffffffffffffffffkjhdsalkjhdlkjhfjdklahfjkdlhldas');
-
-	const product = new Product({
+		const product = new Product({
 		name: 		 req.body.name,
 		image: 		 req.body.image,
 		brand: 		 req.body.brand,
@@ -46,7 +40,7 @@ router.post("/", isAuth, isAdmin, async (req, res) => {
 });
 
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	const productId = req.params.id;
 	const product = await Product.findById(productId);
 	if (product) {
@@ -68,9 +62,8 @@ router.put('/:id', async (req, res) => {
   });
   
 
-router.delete("/:id", isAdmin, async(req, res) => 
-{
-	const deletedProduct = await Product.findById(req.params.id);
+router.delete("/:id",  isAuth, isAdmin,  async(req, res) =>{
+	const deletedProduct = await Product.findById(req.params.id);   
 	if (deletedProduct)	{
 		await deletedProduct.remove();
 		res.send({message: "Product Deleted"})

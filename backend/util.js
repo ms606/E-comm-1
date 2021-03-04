@@ -15,8 +15,7 @@
  }
 
 const isAuth = (req, res, next) => {
-    const token = req.headers.authorization; 
-    
+   const token = req.headers.authorization; 
    if (token) {
        const onlyToken = token.slice(7, token.length);
        jwt.verify(onlyToken, config.JWT_SECRET, (err, decode) => {
@@ -27,8 +26,7 @@ const isAuth = (req, res, next) => {
         next();
         return;
       });
-    } else {
-       
+    } else {       
      console.log('sass');
      return res.status(401).send({ message: "Token is not supplied." });
     }
