@@ -1,48 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { savePayment } from '../actions/cartActions';
-import CheckoutSteps from '../actions/components/CheckoutSteps';
+import CheckoutSteps from '../components/CheckoutSteps';
 
+function PaymentScreen(props) {
+  const [paymentMethod, setPaymentMethod] = useState('');
 
-function PaymentScreen(props){
+  const dispatch = useDispatch();
 
-    const [paymentMethod, SetPaymentMethod]  = useState('');
-
-    const dispatch = useDispatch();
-    
-    const submitHandler = (e) => {
-        e.preventDefault(); 
-        dispatch(savePayment(paymentMethod));
-        props.history.push('placeholder');
-    }
-
-    return <div>
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(savePayment({ paymentMethod }));
+    props.history.push('placeorder');
+  };
+  return (
+    <div>
       <CheckoutSteps step1 step2 step3></CheckoutSteps>
-
-      <div className="form" >
+      <div className="form">
         <form onSubmit={submitHandler}>
-         <ul className="form-container">
+          <ul className="form-container">
             <li>
-                <h2>Payment</h2>
-            </li>
-           
-            <li> 
-               <div>
-               <input type="radio" name="paymentMethod" id="paymentMethod" value="paypal"
-                      onChange={(e) => SetPaymentMethod(e.target.value)}>    
-               </input>
-               <label htmlFor="paymentMethod"> Cash On Delivery </label>                 
-               </div>  
+              <h2>Payment</h2>
             </li>
 
             <li>
-                 <button type="submit" className="button primary">Continue</button>
+              <div>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  id="paymentMethod"
+                  value="paypal"
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                ></input>
+                <label for="paymentMethod">Paypal</label>
+              </div>
             </li>
- 
-         </ul>
+
+            <li>
+              <button type="submit" className="button primary">
+                Continue
+              </button>
+            </li>
+          </ul>
         </form>
+      </div>
     </div>
-    </div>   
+  );
 }
 export default PaymentScreen;
